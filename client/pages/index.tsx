@@ -2,8 +2,9 @@ import Image from "next/image";
 import localFont from "next/font/local";
 import { BsBell, BsBookmark, BsEnvelope, BsTwitter } from "react-icons/bs";
 import { BiHash, BiHomeCircle, BiUser } from "react-icons/bi";
-import React from "react";
+import React, { useCallback } from "react";
 import FeedCard from "@/components/FeedCard";
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 
 interface TwitterSideBarButton {
   title: String;
@@ -48,9 +49,13 @@ const geistMono = localFont({
 });
 
 export default function Home() {
+  const handleLoginWithGoogle = useCallback((cred: CredentialResponse) => {
+    cred;
+  }, []);
+
   return (
     <div>
-      <div className="grid grid-cols-12 w-screen h-screen px-56">
+      <div className="grid grid-cols-12 w-screen h-screen px-30">
         <div className="col-span-3 pt-1 px-4">
           <div className="text-4xl h-fit hover:bg-gray-800 rounded-full p-4 cursor-pointer transition-all w-fit">
             <BsTwitter />
@@ -82,7 +87,12 @@ export default function Home() {
           <FeedCard />
           <FeedCard />
         </div>
-        <div className="col-span-3"></div>
+        <div className="col-span-3 p-5">
+          <div className="p-5 bg-slate-700 rounded-lg">
+            <h1 className="my-2 text-2xl">New to Twitter?</h1>
+            <GoogleLogin onSuccess={(cred) => console.log(cred)} />
+          </div>
+        </div>
       </div>
     </div>
   );
